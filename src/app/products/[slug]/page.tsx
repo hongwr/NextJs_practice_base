@@ -7,7 +7,7 @@ type Props = {
 
 export default function PantsPage(props: Props) {
   return (
-    <div>{props.params.slug} 바지 사용 설명서</div>
+    <div>{props.params.slug} 사용 설명서</div>
   )
 }
 
