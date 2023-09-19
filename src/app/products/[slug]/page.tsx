@@ -5,6 +5,11 @@ type Props = {
     }
 };
 
+export function generateMetadata (props : Props) {
+    return {
+        title: `제품의 이름: ${props.params.slug}`
+    }
+}
 export default function PantsPage(props: Props) {
   return (
     <div>{props.params.slug} 사용 설명서</div>
