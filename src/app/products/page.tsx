@@ -1,9 +1,17 @@
 import getProducts from '@/service/products';
 import Link from 'next/link'
 import React from 'react'
+import styles from './page.module.css'
+
+// ISR Rendering, 3초마다 re rendering
+// export const revalidate = 3;
 
 export default async function ProductsPage() {
   const products = await getProducts();
+  const res = await fetch('https://meowfacts.herokuapp.com', {
+    // next: { revalidate: 0 },
+    // cache: 'no-store'
+  }).then(res => res.json()).then(data => data.data[0]);
 
   return (
     <>
@@ -15,6 +23,7 @@ export default async function ProductsPage() {
                     </li>
             ))}
         </ul>
+        <article className={styles.article}>{res}</article>
     </>
   )
 }
