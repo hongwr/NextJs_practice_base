@@ -1,6 +1,9 @@
 import notFound from "@/app/not-found";
 import getProducts, { getProduct } from "@/service/products";
 
+// ISR Rendering, 3초마다 re rendering
+export const revalidate = 3;
+
 type Props = {
     params: {
         slug: string;
