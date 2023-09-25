@@ -9,8 +9,8 @@ export default function productsLayout({ children }: {
   return (
     <>
         <nav className={styles.nav}>
-            <Link href="/products/woman">여성옷</Link>
-            <Link href="/products/man">남성옷</Link>
+            <Link href="/product/woman">여성옷</Link>
+            <Link href="/product/man">남성옷</Link>
         </nav>
         <section className={styles.product}>{children}</section>
     </>
