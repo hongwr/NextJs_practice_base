@@ -1,5 +1,9 @@
-import notFound from "@/app/not-found";
-import getProducts, { getProduct } from "@/service/products";
+import notFound from '@/app/not-found';
+import getProducts, { getProduct } from '@/service/products';
+import jeans from '../../../../public/images/jeans.jpg';
+import shoes from '../../../../public/images/shoes.jpg';
+import tshirt from '../../../../public/images/tshirt.jpg';
+import Image from 'next/image';
 
 // ISR Rendering, 3초마다 re rendering
 // export const revalidate = 3;
@@ -7,31 +11,34 @@ import getProducts, { getProduct } from "@/service/products";
 type Props = {
     params: {
         slug: string;
-    }
+    };
 };
 
 // 동기적인 seo 적용
-export function generateMetadata ({ params } : Props) {
+export function generateMetadata({ params }: Props) {
     return {
-        title: `제품의 이름: ${params}`
-    }
-};
+        title: `제품의 이름: ${params}`,
+    };
+}
 
-export default async function ProductPage({ params: {slug} } : Props) {
+export default async function ProductPage({ params: { slug } }: Props) {
     const product = await getProduct(slug);
     if (!product) {
         notFound();
     }
 
-  return (
-    <div>{product?.name} 사용 설명서</div>
-  )
-};
+    return (
+        <>
+            <div>{product?.name} 사용 설명서</div>
+            <Image src={`/images/${product?.image}`} alt={product?.name || ''} width={400} height={400} />
+        </>
+    );
+}
 
 // 미리 페이지 만들기. 빌드 시점에 정적으로 생성된다. 미리 html에 만들어 두느냐 마느냐. ssr이기 때문에 사용자와 상호작용을 할 때 만들어지는 것이 맞는데, 그 이전에 미리 만들어 두는 것.
 export async function generateStaticParams() {
     const products = await getProducts();
-    return products.map(product => ({
-        slug: product.id
-    }))
-};
+    return products.map((product) => ({
+        slug: product.id,
+    }));
+}
