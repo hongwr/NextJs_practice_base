@@ -4,6 +4,8 @@ import jeans from '../../../../public/images/jeans.jpg';
 import shoes from '../../../../public/images/shoes.jpg';
 import tshirt from '../../../../public/images/tshirt.jpg';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
+import GoProduct from '@/components/GoProduct';
 
 // ISR Rendering, 3초마다 re rendering
 // export const revalidate = 3;
@@ -24,13 +26,15 @@ export function generateMetadata({ params }: Props) {
 export default async function ProductPage({ params: { slug } }: Props) {
     const product = await getProduct(slug);
     if (!product) {
-        notFound();
+        redirect('/product');
+        // notFound();
     }
 
     return (
         <>
             <div>{product?.name} 사용 설명서</div>
             <Image src={`/images/${product?.image}`} alt={product?.name || ''} width={400} height={400} />
+            <GoProduct />
         </>
     );
 }
